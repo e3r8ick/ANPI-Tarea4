@@ -12,7 +12,7 @@
 #include <exception>
 #include <cstdlib>
 #include <complex>
-
+#include <vector>
 /**
  * Unit tests for the matrix class
  */
@@ -157,8 +157,6 @@ void testConstructors() {
     BOOST_CHECK( b.data() != a.data() );
   }
 }
-
-
 /**
  * Instantiate and test the methods of the Matrix class
  */
@@ -274,6 +272,96 @@ void testArithmetic() {
 
 BOOST_AUTO_TEST_CASE(Arithmetic) {
   dispatchTest(testArithmetic);  
+}
+
+
+
+template <class M, typename T>
+
+void mxmtest(){
+  T eps = std::numeric_limits<T>::epsilon();
+  M a = {{1, 2, 3}, 
+        {-1, 0, 3}}; //2x3;
+  M b = {{2, 3, 4, 5}, 
+         {1, 3, 0 ,1}}; //2x4;
+
+  //matrix * matrix dimensions
+  try{
+    M c = a*b;
+    BOOST_CHECK_MESSAGE(false, "Not propertly checking dimensions");
+  }catch(anpi::Exception& exc){
+    BOOST_CHECK_MESSAGE(true,"Properly checking dimensions");
+  }
+
+  //check multi by zero
+  M zero = {{0 , 0, 0},{0, 0, 0}, {0,0,0}};
+  a = {{1, 2, 3}, {2, 3, 4}, {3, 4, 5}};
+  M p = a * zero;
+  for (int i = 0; i < (int) a.rows(); ++i){
+    for (int j = 0; j < (int) a.cols(); ++j){
+      BOOST_CHECK(abs(p[i][j])<eps);
+    }
+  }
+
+  //check multi by identity
+  M ident = {{1,0,0},{0,1,0},{0,0,1}};
+  p = a * ident;
+  for (int i = 0; i < 3; ++i){
+    for (int j = 0; j < 3; ++j){
+      BOOST_CHECK(abs(p[i][j] - a[i][j]) < eps);
+    }
+  }
+
+  //checks multi by inverse
+  a = {{1,2,3},{0,1,4}, {5,6,0}};
+  M inv = {{-24,18,5},{20,-15,-4},{-5,4,1}};
+  p = a * inv;
+  for (int i = 0; i < (int) a.rows(); ++i){
+    for (int j = 0; j < (int) a.cols(); ++j){
+      if (i == j){
+        BOOST_CHECK(abs(p[i][j] - 1 ) < eps);
+      }else{
+        BOOST_CHECK(abs(p[i][j]) < eps);
+      }
+    }
+  }
+}
+
+template <class M, typename T>
+void mxvtest(){
+
+  //checks matrix * vector dimensions
+
+  M a = {{1, 2, 3},
+         {-1, 0, 3}}; //2x3;
+  std::vector<T> b = {2, 3, 4, 5};//4x1
+  try{
+    std::vector<T> c = a*b;
+    BOOST_CHECK_MESSAGE(false, "Not propertly checking the dimensions");
+  }catch(anpi::Exception& exc){
+    BOOST_CHECK_MESSAGE(true,"Properly checking dimensions");
+  }
+
+  //checks vector * matrix dimensions
+  try{
+    std::vector<T> c = b*a;
+    BOOST_CHECK_MESSAGE(false, "Not propertly checking the dimensions");
+  }catch(anpi::Exception& exc){
+    BOOST_CHECK_MESSAGE(true,"Properly checking dimensions");
+  }
+
+
+
+}
+
+BOOST_AUTO_TEST_CASE(ProductMxM){
+  mxmtest<fmatrix, float>();
+  mxmtest<dmatrix, double>();
+}
+
+BOOST_AUTO_TEST_CASE(ProductMxV){
+  mxvtest<fmatrix, float>();
+  mxvtest<dmatrix, double>();
 }
   
 BOOST_AUTO_TEST_SUITE_END()

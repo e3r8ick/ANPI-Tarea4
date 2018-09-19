@@ -36,10 +36,10 @@ void qr(const anpi::Matrix<T> &A,
 	std::vector<T> d(n);
 	T scale, sigma, sum, tau;
 
-	for (int k = 0; k < n - 1; k++)
+	for (int k = 0; k < n - 1; ++k)
 	{
 		scale = 0.0;
-		for (int i = k; i < n; i++)
+		for (int i = k; i < n; ++i)
 		{
 			scale = std::max(scale, std::abs(R(i, k)));
 		}
@@ -50,14 +50,14 @@ void qr(const anpi::Matrix<T> &A,
 		}
 		else
 		{
-			for (int i = k; i < n; i++)
+			for (int i = k; i < n; ++i)
 			{
 				R(i, k) = R(i, k) / scale;
 			}
 			sum = 0.0;
-			for (int i = k; i < n; i++)
+			for (int i = k; i < n; ++i)
 			{
-				sum = sum + R(i, k) * R(i, k);
+				sum = sum + sqr(R(i, k));
 			}
 			if (R[k][k] >= 0)
 			{
@@ -70,10 +70,10 @@ void qr(const anpi::Matrix<T> &A,
 			R(k, k) = R(k, k) + sigma;
 			c[k] = sigma * R(k, k);
 			d[k] = -scale * sigma;
-			for (int j = k + 1; j < n; j++)
+			for (int j = k + 1; j < n; ++j)
 			{
 				sum = 0.0;
-				for (int i = k; i < n; i++)
+				for (int i = k; i < n; ++i)
 				{
 					sum = sum + R(i, k) * R(i, j);
 				}
@@ -86,27 +86,27 @@ void qr(const anpi::Matrix<T> &A,
 		}
 	}
 
-	d[n - 1] = -R(n - 1, n - 1);
+	d[n - 1] = R(n - 1, n - 1);
 	if (d[n - 1] == 0.0)
 	{
 		throw anpi::Exception("Intentando resolver sistema singular");
 	}
 
 	//hace el Q
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; ++i)
 	{
-		for (int j = 0; j < n; j++)
+		for (int j = 0; j < n; ++j)
 		{
 			Q(i, j) = 0.0;
 		}
 		Q(i, i) = 1.0;
 	}
 
-	for (int k = 0; k < n - 1; k++)
+	for (int k = 0; k < n - 1; ++k)
 	{
 		if (c[k] != 0.0)
 		{
-			for (int j = 0; j < n; j++)
+			for (int j = 0; j < n; ++j)
 			{
 				sum = 0.0;
 				for (int i = k; i < n; i++)
@@ -114,24 +114,24 @@ void qr(const anpi::Matrix<T> &A,
 					sum = sum + R(i, k) * Q(i, j);
 				}
 				sum = sum / c[k];
-				for (int i = k; i < n; i++)
+				for (int i = k; i < n; ++i)
 				{
 					Q(i, j) = Q(i, j) - sum * R(i, k);
 				}
 			}
 		}
 	}
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; ++i)
 	{
 		R(i, i) = d[i];
-		for (int j = 0; j < i; j++)
+		for (int j = 0; j < i; ++j)
 		{
 			R(i, j) = 0.0;
 		}
 	}
 
 	//aux for signs
-	for (int i = 0; i < n; ++i)
+	/*for (int i = 0; i < n; ++i)
 	{
 		for (int j = 0; j < n; ++j)
 		{
@@ -139,7 +139,7 @@ void qr(const anpi::Matrix<T> &A,
 			R(i, j) = -R(i, j);
 		}
 	}
-	R(n - 1, n - 1) = -R(n - 1, n - 1);
+	R(n - 1, n - 1) = -R(n - 1, n - 1);*/
 }
 
 template <typename T>
@@ -158,28 +158,33 @@ bool solveQR(const anpi::Matrix<T> &A,
 template <typename T>
 void qtMult(const std::vector<T> &b, std::vector<T> &x, anpi::Matrix<T> &Q)
 {
-	T sum;
+	T sum;	
 	int n = Q.rows();
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; ++i)
 	{
 		sum = 0.0;
-		for (int j = 0; j < n; j++)
+		for (int j = 0; j < n; ++j)
 		{
+
 			sum = sum + Q(i, j) * b[j];
-			x[i] = sum;
+			
 		}
+
+		x[i] = sum;
 	}
+
 }
 
 template <typename T>
 void rSolve(const std::vector<T> &b, std::vector<T> &x, anpi::Matrix<T> &R)
 {
+
 	T sum;
 	int n = R.rows();
-	for (int i = n - 1; i >= 0; i--)
+	for (int i = n - 1; i >= 0; --i)
 	{
 		sum = b[i];
-		for (int j = i + 1; j < n; j++)
+		for (int j = i + 1; j < n; ++j)
 		{
 			sum = sum - R(i, j) * x[j];
 		}

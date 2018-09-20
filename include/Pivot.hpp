@@ -24,7 +24,11 @@ namespace anpi
 {
 
 
-//prints a matrix
+/**
+ * Print a matrix
+ * 
+ * @Params[in] T a square matrix
+ * */
 template <typename T>
 void printM(const Matrix<T> &M){
   int rows = M.rows();
@@ -37,6 +41,11 @@ void printM(const Matrix<T> &M){
   }
 }
 
+/**
+ * Makes the pivot of the matrix
+ * 
+ * @param[in] A a square matrix
+ * */
 template <typename T>
 void pivot(const Matrix<T> &A,
            Matrix<T> &LU,

@@ -27,7 +27,7 @@
 #include "LUDoolittle.hpp"
 #include "LUCrout.hpp"
 
-BOOST_AUTO_TEST_SUITE( LU )
+BOOST_AUTO_TEST_SUITE( Maxtrix )
 
 /// Benchmark for addition operations
 template<typename T>
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE( LU ) {
   {
     benchCroutFloat<float>  bc(n);
 
-    // Measure Crout
+    // Measure Crout float
     ANPI_BENCHMARK(sizes,repetitions,times,bc);
     
     ::anpi::benchmark::write("Crout_float.txt",times);
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE( LU ) {
   {
     benchCroutDouble<double>  bc(n);
 
-    // Measure Crout
+    // Measure Crout double
     ANPI_BENCHMARK(sizes,repetitions,times,bc);
     
     ::anpi::benchmark::write("Crout_double.txt",times);
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE( LU ) {
   {
     benchDoolittleFloat<float> bd(n);
 
-    // Measure Doolittle
+    // Measure Doolittle float
     ANPI_BENCHMARK(sizes,repetitions,times,bd);
 
     ::anpi::benchmark::write("Doolittle_float.txt",times);
@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE( LU ) {
   {
     benchDoolittleDouble<double> bd(n);
 
-    // Measure Doolittle
+    // Measure Doolittle double
     ANPI_BENCHMARK(sizes,repetitions,times,bd);
 
     ::anpi::benchmark::write("Doolittle_double.txt",times);

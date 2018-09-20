@@ -23,7 +23,12 @@
 namespace anpi
 {
 
-
+/**
+ * Invert the MAtrix
+ *  
+ * @Param[in] A an MAtrix
+ * @Param[in] Ai the MAtrix A inverted
+ * */
 template <typename T>
 void invert(const anpi::Matrix<T> &A, anpi::Matrix<T> &Ai){
     std::vector<T> Aj;

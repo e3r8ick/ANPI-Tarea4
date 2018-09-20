@@ -12,18 +12,34 @@
 
 namespace anpi
 {
+
+/**
+ * calculate the square of a number x
+ * */	
 template <typename T>
 T sqr(T x)
 {
 	return x * x;
 }
 
+/**
+ * get the sign of a number x
+ * 
+*/
 template <typename T>
 int sgn(T x)
 {
 	return (T(0) < x) - (x < T(0));
 }
 
+
+/**
+ * Perform QR decomposition
+ * @param A original matrix
+ * @param Q orthogonal matrix
+ * @param R right matrix
+ * 
+*/
 template <typename T>
 void qr(const anpi::Matrix<T> &A,
 		anpi::Matrix<T> &Q,
@@ -43,12 +59,12 @@ void qr(const anpi::Matrix<T> &A,
 		{
 			scale = std::max(scale, std::abs(R(i, k)));
 		}
-		if (scale == 0.0)
+		if (scale == 0.0)// singular case
 		{
 			c[k] = d[k] = 0.0;
 			throw anpi::Exception("Intentando resolver sistema singular");
 		}
-		else
+		else    //form Qk and Qk *A 
 		{
 			for (int i = k; i < n; ++i)
 			{
@@ -92,7 +108,7 @@ void qr(const anpi::Matrix<T> &A,
 		throw anpi::Exception("Intentando resolver sistema singular");
 	}
 
-	//hace el Q
+	//Form Qt
 	for (int i = 0; i < n; ++i)
 	{
 		for (int j = 0; j < n; ++j)
@@ -130,18 +146,13 @@ void qr(const anpi::Matrix<T> &A,
 		}
 	}
 
-	//aux for signs
-	/*for (int i = 0; i < n; ++i)
-	{
-		for (int j = 0; j < n; ++j)
-		{
-			Q(i, j) = -Q(i, j);
-			R(i, j) = -R(i, j);
-		}
-	}
-	R(n - 1, n - 1) = -R(n - 1, n - 1);*/
 }
-
+/**
+ * solve a set of linear aquations Ax=b
+ * @param A original matrix
+ * @param x vector that we are looking for
+ * @param b solution vector
+*/
 template <typename T>
 bool solveQR(const anpi::Matrix<T> &A,
 			 std::vector<T> &x,
@@ -155,6 +166,11 @@ bool solveQR(const anpi::Matrix<T> &A,
 	return true;
 }
 
+
+/**
+ * perform Qt*b and put the result in x
+ * 
+*/
 template <typename T>
 void qtMult(const std::vector<T> &b, std::vector<T> &x, anpi::Matrix<T> &Q)
 {
@@ -175,6 +191,10 @@ void qtMult(const std::vector<T> &b, std::vector<T> &x, anpi::Matrix<T> &Q)
 
 }
 
+/**
+ * solve the set of linear equations Rx=b
+ * 
+*/
 template <typename T>
 void rSolve(const std::vector<T> &b, std::vector<T> &x, anpi::Matrix<T> &R)
 {

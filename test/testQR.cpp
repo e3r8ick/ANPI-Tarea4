@@ -32,7 +32,7 @@ namespace anpi {
        	int r,c;
        	r=A.rows();
        	c=A.cols();
-		anpi::Matrix<T> Q=anpi::Matrix<T>(r,c,0.0);
+			anpi::Matrix<T> Q=anpi::Matrix<T>(r,c,0.0);
   		anpi::Matrix<T> R=anpi::Matrix<T>(r,c,0.0);
   		//apply qr decomposition
   		anpi::qr(A,Q,R);
@@ -83,7 +83,7 @@ namespace anpi {
 
       //test Solve { {-1,-2,1}, { 2, 0,1}, {-1,-1,0} }*{x,y,z}={1,0,-1}
       std::vector<T> b={1,0,-1};
-      std::vector<T> x;
+      std::vector<T> x={0.,0.,0.};
       anpi::solveQR(A,x,b);
       std::vector<T> xRef={-3,4,6};
       

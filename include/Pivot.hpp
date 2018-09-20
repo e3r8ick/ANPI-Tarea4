@@ -4,8 +4,8 @@
  *
  * This file is part of the numerical analysis lecture CE3102 at TEC
  *
- * @Author: 
- * @Date  : 03.03.2018
+ * @Author:
+ * @Date  : 12.09.2018
  */
 
 #include <cmath>
@@ -23,8 +23,10 @@
 namespace anpi
 {
 
-
-//prints a matrix
+  /** @param[in] Matrix<T> &M
+    *
+    * Prints matrix M
+    */
 template <typename T>
 void printM(const Matrix<T> &M){
   int rows = M.rows();
@@ -37,6 +39,13 @@ void printM(const Matrix<T> &M){
   }
 }
 
+/** @param[in] const Matrix<T> &A
+  * @param[out] Matrix<T> &LU
+  * @param[out] vector<size_t> &permut
+  *
+  * Pivots matrix A. During pivoting changes are stored in the vector permut.
+  * One permutation is completed returns the pivoted matrix through LU.
+  */
 template <typename T>
 void pivot(const Matrix<T> &A,
            Matrix<T> &LU,
@@ -95,7 +104,6 @@ void pivot(const Matrix<T> &A,
     } //end for pivoting
   }   //end columns A
 }
-
 
 } //anpi
 

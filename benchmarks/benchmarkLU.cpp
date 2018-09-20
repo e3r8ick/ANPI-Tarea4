@@ -16,6 +16,7 @@
 #include <exception>
 #include <cstdlib>
 #include <complex>
+#include <ctime>
 
 /**
  * Unit tests for the LU class
@@ -26,7 +27,7 @@
 #include "LUDoolittle.hpp"
 #include "LUCrout.hpp"
 
-BOOST_AUTO_TEST_SUITE( Matrix )
+BOOST_AUTO_TEST_SUITE( LU )
 
 /// Benchmark for addition operations
 template<typename T>
@@ -122,7 +123,7 @@ BOOST_AUTO_TEST_CASE( LU ) {
 
   std::vector<size_t> sizes = {  24,  32,  48,  64,
                                  96, 128, 192, 256,
-                                384, 512, 768,1024};
+                                384, 512, 768,1024};//para que dure menos tiempos se quitaron elementos
 
   const size_t n=sizes.back();
   const size_t repetitions=100;

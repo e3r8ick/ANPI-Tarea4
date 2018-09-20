@@ -22,20 +22,13 @@
 
 namespace anpi
 {
-
-<<<<<<< HEAD
-
+  
 /**
  * Print a matrix
- * 
+ *
  * @Params[in] T a square matrix
  * */
-=======
-  /** @param[in] Matrix<T> &M
-    *
-    * Prints matrix M
-    */
->>>>>>> a34b4af641234b73c0cc95dc11d5108e2984e2f6
+
 template <typename T>
 void printM(const Matrix<T> &M){
   int rows = M.rows();
@@ -48,13 +41,6 @@ void printM(const Matrix<T> &M){
   }
 }
 
-<<<<<<< HEAD
-/**
- * Makes the pivot of the matrix
- * 
- * @param[in] A a square matrix
- * */
-=======
 /** @param[in] const Matrix<T> &A
   * @param[out] Matrix<T> &LU
   * @param[out] vector<size_t> &permut
@@ -62,7 +48,7 @@ void printM(const Matrix<T> &M){
   * Pivots matrix A. During pivoting changes are stored in the vector permut.
   * One permutation is completed returns the pivoted matrix through LU.
   */
->>>>>>> a34b4af641234b73c0cc95dc11d5108e2984e2f6
+
 template <typename T>
 void pivot(const Matrix<T> &A,
            Matrix<T> &LU,

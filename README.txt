@@ -18,6 +18,8 @@ And build everything with
 
 > make
 
+>cd bin
+
 Test matrix multiplication
 
 > ./tester -t Matrix -r detailed 
@@ -29,3 +31,7 @@ Test Crout and Doolittle methods, the unpacking* methods and matrix inversion
 Tests the QR method, check if Q is orthogonal, R is upper triangular and QR=A
 
 > ./tester -t QR -r detailed
+
+Benchmarks
+
+> ./benchmarks 

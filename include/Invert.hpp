@@ -4,8 +4,8 @@
  *
  * This file is part of the numerical analysis lecture CE3102 at TEC
  *
- * @Author: 
- * @Date  : 03.03.2018
+ * @Author:
+ * @Date  : 19.09.2018
  */
 
 #include <cmath>
@@ -23,7 +23,11 @@
 namespace anpi
 {
 
-
+/** @param[in] Matrix<T> &A
+  * @param[out] Matrix<T> &Ai
+  *
+  * Inverts matrix A by solving it with LU and returns it through Ai
+  */
 template <typename T>
 void invert(const anpi::Matrix<T> &A, anpi::Matrix<T> &Ai){
     std::vector<T> Aj;
@@ -38,7 +42,6 @@ void invert(const anpi::Matrix<T> &A, anpi::Matrix<T> &Ai){
             Ai[i][j] = Aj[i];
         }
     }
-    
 }
 
 } //anpi
